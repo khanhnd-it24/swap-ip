@@ -13,11 +13,11 @@ text = input("Enter text: ")
 
 def doSomething():
     try: 
-        driver = webdriver.Chrome(executable_path=r'D:\Work\chromedriver_win32\chromedriver.exe') # to open the chromebrowser 
+        driver = webdriver.Chrome(executable_path=r'D:\Github\swapip\swap-ip\chromedriver.exe') # to open the chromebrowser 
         driver.get(link)
-        time.sleep(25)
+        time.sleep(5)
         driver.find_element_by_xpath(ant_input).send_keys(text)
-        time.sleep(10)
+        time.sleep(2)
         parrentDiv = driver.find_element_by_xpath(list_item)
         items = parrentDiv.find_elements_by_class_name("eLItHB")
         idx = 0
@@ -27,7 +27,11 @@ def doSomething():
                 break
 
         items[idx].click()
-        time.sleep(20)
+        time.sleep(5)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
+        driver.execute_script("window.scrollTo(0, 0);")
+        time.sleep(2)
         driver.delete_all_cookies()
         driver.close()
     except:
@@ -38,6 +42,9 @@ def doSomething():
 def checkIp():
     try:
         public_ip = requests.get("http://wtfismyip.com/text").text
+        f = open("log-ip.txt", "a")
+        f.write(public_ip)
+        f.close()
         print(public_ip)
     except:
         checkIp()
@@ -48,5 +55,5 @@ while True:
     checkIp()
     print(dem)
     dem += 1
-    time.sleep(10)
+    time.sleep(1)
 
